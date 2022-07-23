@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../layout/shop_layout/cubit/cubit.dart';
 import '../../modules/news_app/web_view/web_view_screen.dart';
 import '../styles/colors.dart';
 
@@ -186,114 +185,6 @@ Color? chooseToastColor(ToastStates states) {
   return color;
 }
 
-Widget buildListProduct(data, context, {bool isOldPrice = true}) => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 120,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-
-              offset: Offset(0.0, 1.0), //(x,y)
-
-              blurRadius: 1.0,
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomStart,
-                children: [
-                  Image(
-                    image: NetworkImage(data.image!),
-
-                    width: 120,
-
-                    // fit: BoxFit.cover,
-
-                    height: 120,
-                  ),
-                  if (data.discount != 0 && isOldPrice)
-                    Container(
-                      color: Colors.red,
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(
-                        'DISCOUNT',
-                        style: TextStyle(
-                          fontSize: 8.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      data.name!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.0, height: 1.2),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        Text(
-                          data.price.toString(),
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: defaultColor,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        if (data.discount != 0 && isOldPrice)
-                          Text(
-                            data.oldPrice.toString(),
-                            style: TextStyle(
-                              fontSize: 10.0,
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              ShopCubit.get(context).changeFavorites(data.id!);
-                            },
-                            icon: CircleAvatar(
-                                radius: 15,
-                                backgroundColor:
-                                    ShopCubit.get(context).favorites[data.id]!
-                                        ? defaultColor
-                                        : Colors.grey,
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
-                                ))),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
 
 PreferredSizeWidget defaultAppBar(
         {required context, String? title, List<Widget>? actions}) =>
